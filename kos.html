@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <title>Golek Kos</title>
+    <style>
+      .relativediv {
+        position: relative;
+        }
+
+      .absolutediv {
+        position: absolute;
+        width: 130px;
+        top: 140px;
+        right: -15px;
+      }
+      #mapid { 
+        height: 680px;
+        /*width: 560px;*/
+      }
+      .relativemap {
+        position: relative;
+      }
+      .absolutemap {
+        position: absolute;
+        width: 130px;
+        top: 170px;
+        right: -15px;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="container-fluid">
+        <div class="row pt-3 bg-dark">
+          <div class="col-5">
+            <div class="row" id="cardlist"></div>
+          </div>
+          <div class="col-7">
+            <div id="mapid"></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        //array of object
+        const houses = [
+           {
+               name: 'Rumah Hakim',
+               address: 'Jl. Musyawarah 2-10, Sawah Lama',
+               longitude: -6.301437,
+               latitude: 106.739366,
+               cover: 'https://lh5.googleusercontent.com/p/AF1QipOByvVeeqHZkyE47zjBmAAdo04H0dJtEscZGaH0=w408-h272-k-no',
+               price: '$8950'
+           },
+           {
+               name: 'Kost Maman',
+               address: 'Jl. Musyawarah No. 99, RT 04 / RW 01',
+               longitude: -6.300862,
+               latitude: 106.737177,
+               cover: 'https://lh5.googleusercontent.com/p/AF1QipOByvVeeqHZkyE47zjBmAAdo04H0dJtEscZGaH0=w408-h272-k-no',
+               price: '$6600'
+           },
+           {
+               name: 'Kost Radif',
+               address: 'South Tangerang City, Banten 15413',
+               longitude: -6.302269,
+               latitude: 106.737757,
+               cover: 'https://lh5.googleusercontent.com/p/AF1QipOByvVeeqHZkyE47zjBmAAdo04H0dJtEscZGaH0=w408-h272-k-no',
+               price: '$9050'
+           },
+           {
+               name: 'Kost Taufik',
+               address: 'Gg. Tego 31-65, Sawah Lama, Kec. Ciputat',
+               longitude: -6.302173,
+               latitude: 106.740879,
+               cover: 'https://lh5.googleusercontent.com/p/AF1QipOByvVeeqHZkyE47zjBmAAdo04H0dJtEscZGaH0=w408-h272-k-no',
+               price: '$8210'
+           }
+           
+        ]
+      //looping display card
+      let card = document.getElementById("cardlist");
+      for (let i=0; i < houses.length; i++) {
+      card.innerHTML +=
+      '<div class="col-6 pb-3"><div class="card relativediv" style="border-radius: 12px;">' +
+      '<img src="https://lh5.googleusercontent.com/p/AF1QipOByvVeeqHZkyE47zjBmAAdo04H0dJtEscZGaH0=w408-h272-k-no" class="card-img-top" alt="...">' +
+      '<button type="button" class="btn btn-success rounded-pill absolutediv" id="">'+houses[i].price+'</button>' +
+      '<div class="card-body">' +
+      '<p style="font-size:13px;" class="card-text">' + houses[i].name + '</p>' +
+      '<p class="card-text">'+ houses[i].address +'</p>' +
+      '<button style="font-size:13px;" type="button" class="btn btn-outline-secondary rounded-pill" disabled data-toggle="button" aria-pressed="false" autocomplete="off">masuk</button>' +
+      '<button style="font-size:13px;" type="button" class="btn btn-outline-secondary rounded-pill" disabled data-toggle="button" aria-pressed="false" autocomplete="off">keluar</button>' +
+      '</div></div></div>';
+     
+     }
+
+      //call a leaflet
+      var mapOptions = {
+        center: [-6.3013753, 106.7387529,17],
+        zoom: 16
+      }
+
+      var map = new L.map('mapid', mapOptions);
+
+      var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+      map.addLayer(layer);
+
+      //looping marked maps
+      for (let i=0;i < houses.length;i++) {
+
+      // Creating a marker
+      var marker = L.marker([houses[i].longitude, houses[i].latitude]);
+      // Adding popup to the marker
+      marker.bindPopup(
+      '<div class="card relativemap" style="border-radius: 12px;">' +
+      '<img src="https://lh5.googleusercontent.com/p/AF1QipOByvVeeqHZkyE47zjBmAAdo04H0dJtEscZGaH0=w408-h272-k-no" class="card-img-top" alt="...">' +
+      '<button type="button" class="btn btn-success rounded-pill absolutemap" id="">'+ houses[i].price + '</button>' +
+      '<div class="card-body">' +
+      '<p class="card-text">'+ houses[i].name + '</p>' +
+      '<p style="font-size:17px;" class="card-text">'+ houses[i].address +'</p>' +
+      '<button style="font-size:13px;" type="button" class="btn btn-outline-secondary rounded-pill" disabled data-toggle="button" aria-pressed="false" autocomplete="off">masuk</button>' +
+      '<button style="font-size:13px;" type="button" class="btn btn-outline-secondary rounded-pill" disabled data-toggle="button" aria-pressed="false" autocomplete="off">keluar</button>' +
+      '</div></div>').openPopup();   
+      // Adding marker to the map
+      marker.addTo(map);
+      }
+      
+    </script>
+    <!--bootstrap cdn-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
