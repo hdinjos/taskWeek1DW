@@ -1,0 +1,23 @@
+.relativediv {
+    position: relative;
+    }
+
+  .absolutediv {
+    position: absolute;
+    width: 130px;
+    top: 140px;
+    right: -15px;
+  }
+  #mapid { 
+    height: 680px;
+    /*width: 560px;*/
+  }
+  .relativemap {
+    position: relative;
+  }
+  .absolutemap {
+    position: absolute;
+    width: 130px;
+    top: 180px;
+    right: -15px;
+  }
